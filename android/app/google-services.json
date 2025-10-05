@@ -7,6 +7,25 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:415016775391:android:0863885284bb7211a5836a",
+        "android_client_info": {
+          "package_name": "com.example.polleria_donpollo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCHIncWyX18kz-rnKPnGoZ6QZRuLNAxNE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:415016775391:android:e75cbbfd4dd53affa5836a",
         "android_client_info": {
           "package_name": "com.example.semana_07"

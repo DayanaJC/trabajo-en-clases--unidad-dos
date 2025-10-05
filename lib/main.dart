@@ -1,75 +1,99 @@
-import 'cliente_screen.dart';
-import 'home_screen.dart';
-import 'ubications_screen.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-
-
+import 'package:firebase_core/firebase_core.dart';
+import 'platos_menu.dart';
+import 'empleados.dart';
+import 'proveedores.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(const MainApp()); 
+  runApp(const MyApp());
 }
 
-
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "Bottom Nav Bar",
-      theme: ThemeData(primarySwatch: Colors.deepPurple),
-      home: const BottomNav(),
+      debugShowCheckedModeBanner: false, 
+      title: 'Gestión del Restaurante',
+      theme: ThemeData(
+        primarySwatch: Colors.teal,
+        scaffoldBackgroundColor: Colors.grey[100],
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.teal,
+          foregroundColor: Colors.white,
+          elevation: 3,
+        ),
+        drawerTheme: const DrawerThemeData(
+          backgroundColor: Colors.white,
+        ),
+        floatingActionButtonTheme: const FloatingActionButtonThemeData(
+          backgroundColor: Colors.teal,
+          foregroundColor: Colors.white,
+        ),
+      ),
+      home: const HomeScreen(),
     );
   }
 }
 
-class BottomNav extends StatefulWidget {
-  const BottomNav({super.key});
-
-  @override
-  State<BottomNav> createState() => _BottomNavState();
-}
-
-class _BottomNavState extends State<BottomNav> {
-  int _seleccion = 0;
-
-  final List<Widget> _pantallas = const [
-    home_screen(),      // 👈 aquí va tu lista de productos
-    cliente_screen(),
-    ubications_screen(),
-  ];
-
-  void _onItemSelected(int item) {
-    setState(() {
-      _seleccion = item;
-    });
-  }
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _pantallas[_seleccion],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _seleccion,
-        onTap: _onItemSelected,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: "Inicio",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.people),
-            label: "Clientes",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.map),
-            label: "Ubicaciones",
-          ),
-        ],
+      appBar: AppBar(title: const Text('Panel Principal')),
+      body: const Center(
+        child: Text(
+          'Bienvenido a la Pollería Don Pollo S.A.C.',
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(color: Colors.teal),
+              child: Text(
+                'Gestión de la Polleria Don Pollo',
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.restaurant, color: Colors.teal),
+              title: const Text('Platos y Menú'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => PlatosMenuScreen()),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.people, color: Colors.teal),
+              title: const Text('Empleados'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => EmpleadosScreen()),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.local_shipping, color: Colors.teal),
+              title: const Text('Proveedores'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => ProveedoresScreen()),
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
